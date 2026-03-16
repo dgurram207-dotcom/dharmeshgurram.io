@@ -19,10 +19,27 @@ font-family:'Inter',sans-serif;
 color:#ffffff;
 overflow-x:hidden;
 
+/* SUBTLE RADIAL LIGHTING BACKGROUND */
 background:
-radial-gradient(circle at 15% 25%, #1e3a8a 0%, transparent 40%),
-radial-gradient(circle at 85% 75%, #0f766e 0%, transparent 40%),
+radial-gradient(circle at 20% 30%, rgba(37,99,235,0.35), transparent 40%),
+radial-gradient(circle at 80% 70%, rgba(20,184,166,0.30), transparent 40%),
 linear-gradient(180deg,#020617 0%,#020617 40%,#0b1120 100%);
+}
+
+/* DEVELOPER STYLE GRID OVERLAY */
+body::after{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+pointer-events:none;
+background-image:
+linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+background-size:70px 70px;
+z-index:-1;
 }
 
 /* subtle tech grid */
@@ -181,7 +198,7 @@ footer{text-align:center;padding:40px;opacity:.6}
 </nav>
 
 <section class="hero">
-<img src="Dh.png" class="profile-photo">
+<img src="images/profile.jpg" class="profile-photo">
 <h1>Dharmesh Gurram</h1>
 <div class="typing" id="typing"></div>
 <button onclick="document.getElementById('projects').scrollIntoView()">View My Work</button>
@@ -198,15 +215,10 @@ footer{text-align:center;padding:40px;opacity:.6}
 <section id="skills" class="reveal">
 <h2 class="section-title">Skills</h2>
 <div class="skills">
-<div class="glass">Python<div class="progress"><span data-width="70%"></span></div></div>
-<div class="glass">TensorFlow<div class="progress"><span data-width="70%"></span></div></div>  
-<div class="glass">Scikit-learn<div class="progress"><span data-width="70%"></span></div></div>  
-<div class="glass">Machine Learning (ML)<div class="progress"><span data-width="70%"></span></div></div>
 <div class="glass">Thermodynamics<div class="progress"><span data-width="90%"></span></div></div>
 <div class="glass">Fluid Mechanics<div class="progress"><span data-width="85%"></span></div></div>
 <div class="glass">Engineering Mechanics<div class="progress"><span data-width="95%"></span></div></div>
-
-
+<div class="glass">Python<div class="progress"><span data-width="70%"></span></div></div>
 </div>
 </section>
 
@@ -271,7 +283,12 @@ positions[i*3+2]=(Math.random()-0.5)*200
 
 geometry.setAttribute('position',new THREE.BufferAttribute(positions,3))
 
-const material=new THREE.PointsMaterial({color:0x2563eb,size:2})
+const material=new THREE.PointsMaterial({
+color:0x38bdf8,
+size:2,
+transparent:true,
+opacity:0.9
+})
 const cloud=new THREE.Points(geometry,material)
 scene.add(cloud)
 
@@ -285,10 +302,11 @@ mouse.y=(e.clientY/window.innerHeight-0.5)*2
 function animate(){
 requestAnimationFrame(animate)
 
+/* SMOOTH DEPTH ANIMATION */
 cloud.rotation.y+=0.0007
 cloud.rotation.x+=0.0003
 
-camera.position.x+=(mouse.x*15-camera.position.x)*0.02
+(mouse.x*15-camera.position.x)*0.02
 camera.position.y+=(-mouse.y*15-camera.position.y)*0.02
 
 camera.lookAt(scene.position)
@@ -334,7 +352,7 @@ window.addEventListener('scroll',reveal)
 
 /* GITHUB PROJECTS */
 
-fetch("https://api.github.com/users/dgurram207-dotcom/repos")
+fetch("https://api.github.com/users/YOURUSERNAME/repos")
 .then(res=>res.json())
 .then(data=>{
 const container=document.getElementById('repoContainer')
