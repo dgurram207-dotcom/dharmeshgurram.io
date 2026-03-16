@@ -16,9 +16,17 @@ body{
 font-family:'Inter',sans-serif;
 color:white;
 overflow-x:hidden;
-background:linear-gradient(-45deg,#0f172a,#020617,#111827,#1e1b4b);
-background-size:400% 400%;
-animation:gradientMove 18s ease infinite;
+background:#050816;
+}
+
+/* CANVAS BACKGROUND */
+#bgAnimation{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
 }
 
 @keyframes gradientMove{
@@ -26,6 +34,48 @@ animation:gradientMove 18s ease infinite;
 50%{background-position:100% 50%}
 100%{background-position:0% 50%}
 }
+
+/* BACKGROUND PARTICLE ANIMATION */
+
+const canvasBg=document.getElementById('bgAnimation')
+const ctxBg=canvasBg.getContext('2d')
+
+canvasBg.width=window.innerWidth
+canvasBg.height=window.innerHeight
+
+let dots=[]
+
+for(let i=0;i<120;i++){
+ dots.push({
+  x:Math.random()*canvasBg.width,
+  y:Math.random()*canvasBg.height,
+  r:Math.random()*2,
+  dx:(Math.random()-.5)*0.6,
+  dy:(Math.random()-.5)*0.6
+ })
+}
+
+function drawBg(){
+ ctxBg.clearRect(0,0,canvasBg.width,canvasBg.height)
+
+ dots.forEach(d=>{
+
+  d.x+=d.dx
+  d.y+=d.dy
+
+  if(d.x<0||d.x>canvasBg.width) d.dx*=-1
+  if(d.y<0||d.y>canvasBg.height) d.dy*=-1
+
+  ctxBg.beginPath()
+  ctxBg.arc(d.x,d.y,d.r,0,Math.PI*2)
+  ctxBg.fillStyle='rgba(99,102,241,0.7)'
+  ctxBg.fill()
+ })
+
+ requestAnimationFrame(drawBg)
+}
+
+drawBg()
 
 /* CURSOR GLOW */
 
@@ -197,6 +247,8 @@ background:white;color:black
 
 <body>
 
+<canvas id="bgAnimation"></canvas>
+
 <div class="cursor" id="cursor"></div>
 
 <nav>
@@ -213,7 +265,7 @@ background:white;color:black
 </nav>
 
 <section class="hero">
-<img src="Dh.png" class="profile-photo">
+<img src="images/profile.jpg" class="profile-photo">
 <h1>Dharmesh Gurram</h1>
 <div class="typing" id="typing"></div>
 <button onclick="document.getElementById('projects').scrollIntoView()">View My Work</button>
