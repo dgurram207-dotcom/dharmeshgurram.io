@@ -4,10 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dharmesh Gurram | Portfolio</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 
 <style>
-
 *{margin:0;padding:0;box-sizing:border-box}
 
 html{scroll-behavior:smooth}
@@ -15,83 +16,18 @@ html{scroll-behavior:smooth}
 body{
 font-family:'Inter',sans-serif;
 color:white;
-overflow-x:hidden;
 background:#050816;
+overflow-x:hidden
 }
 
-/* CANVAS BACKGROUND */
-#bgAnimation{
+#three-bg{
 position:fixed;
 top:0;
 left:0;
 width:100%;
 height:100%;
-z-index:-1;
+z-index:-1
 }
-
-@keyframes gradientMove{
-0%{background-position:0% 50%}
-50%{background-position:100% 50%}
-100%{background-position:0% 50%}
-}
-
-/* BACKGROUND PARTICLE ANIMATION */
-
-const canvasBg=document.getElementById('bgAnimation')
-const ctxBg=canvasBg.getContext('2d')
-
-canvasBg.width=window.innerWidth
-canvasBg.height=window.innerHeight
-
-let dots=[]
-
-for(let i=0;i<120;i++){
- dots.push({
-  x:Math.random()*canvasBg.width,
-  y:Math.random()*canvasBg.height,
-  r:Math.random()*2,
-  dx:(Math.random()-.5)*0.6,
-  dy:(Math.random()-.5)*0.6
- })
-}
-
-function drawBg(){
- ctxBg.clearRect(0,0,canvasBg.width,canvasBg.height)
-
- dots.forEach(d=>{
-
-  d.x+=d.dx
-  d.y+=d.dy
-
-  if(d.x<0||d.x>canvasBg.width) d.dx*=-1
-  if(d.y<0||d.y>canvasBg.height) d.dy*=-1
-
-  ctxBg.beginPath()
-  ctxBg.arc(d.x,d.y,d.r,0,Math.PI*2)
-  ctxBg.fillStyle='rgba(99,102,241,0.7)'
-  ctxBg.fill()
- })
-
- requestAnimationFrame(drawBg)
-}
-
-drawBg()
-
-/* CURSOR GLOW */
-
-.cursor{
-width:20px;
-height:20px;
-border-radius:50%;
-position:fixed;
-background:radial-gradient(circle,#8b5cf6,#6366f1,transparent);
-pointer-events:none;
-transform:translate(-50%,-50%);
-filter:blur(6px);
-z-index:9999;
-}
-
-/* NAV */
 
 nav{
 position:fixed;
@@ -108,19 +44,8 @@ z-index:1000
 }
 
 nav ul{display:flex;gap:28px;list-style:none}
-
 nav a{color:white;text-decoration:none;font-size:14px;opacity:.8}
 nav a:hover{opacity:1}
-
-.toggle{
-cursor:pointer;
-padding:6px 14px;
-border-radius:20px;
-background:rgba(255,255,255,0.1);
-font-size:12px
-}
-
-/* HERO */
 
 .hero{
 height:100vh;
@@ -138,7 +63,6 @@ box-shadow:0 20px 60px rgba(0,0,0,.8)
 }
 
 .hero h1{font-size:60px;margin-bottom:10px}
-
 .typing{font-size:22px;height:28px}
 
 .hero button{
@@ -147,16 +71,12 @@ padding:14px 36px;
 border:none;
 border-radius:30px;
 background:linear-gradient(90deg,#6366f1,#22c55e,#8b5cf6);
-background-size:200%;
 color:white;
 cursor:pointer
 }
 
 section{padding:120px 10%;max-width:1300px;margin:auto}
-
 .section-title{text-align:center;font-size:34px;margin-bottom:70px}
-
-/* GLASS */
 
 .glass{
 background:rgba(255,255,255,0.06);
@@ -167,89 +87,44 @@ padding:28px;
 transition:.4s
 }
 
-/* ABOUT */
-
 .about{display:grid;grid-template-columns:1fr 1fr;gap:60px}
-
-/* SKILLS */
 
 .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:30px}
 
 .progress{margin-top:10px;height:8px;background:#1f2937;border-radius:20px;overflow:hidden}
-
 .progress span{display:block;height:100%;background:linear-gradient(90deg,#6366f1,#22c55e);width:0}
-
-/* PROJECTS */
 
 .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
 
-.project{
-perspective:1000px
-}
-
-.project-inner{
-position:relative;
-transition:transform .4s;
-transform-style:preserve-3d
-}
-
-.project:hover .project-inner{
-transform:rotateY(8deg) rotateX(6deg) scale(1.03)
-}
-
-/* GALLERY */
+.project{perspective:1000px}
+.project-inner{transition:transform .4s}
+.project:hover .project-inner{transform:rotateY(8deg) rotateX(6deg) scale(1.03)}
 
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
-.gallery img{width:100%;border-radius:12px;transition:.4s}
-.gallery img:hover{transform:scale(1.05)}
-
-/* TIMELINE */
+.gallery img{width:100%;border-radius:12px}
 
 .timeline{border-left:2px solid #6366f1;padding-left:30px}
 .timeline-item{margin-bottom:30px}
 .timeline-item span{font-size:13px;opacity:.7}
-
-/* GITHUB GRAPH */
-
-.github{
-text-align:center
-}
-
-.github img{
-width:100%;
-max-width:900px;
-margin-top:30px
-}
-
-/* CONTACT */
 
 .contact{text-align:center}
 .contact button{padding:14px 36px;border:none;border-radius:30px;background:#22c55e;color:white;margin-top:20px}
 
 footer{text-align:center;padding:40px;opacity:.6}
 
-/* REVEAL */
-
 .reveal{opacity:0;transform:translateY(40px);transition:all .8s}
 .reveal.active{opacity:1;transform:translateY(0)}
-
-.light{
-background:white;color:black
-}
 
 @media(max-width:900px){
 .hero h1{font-size:38px}
 .about{grid-template-columns:1fr}
 }
-
 </style>
 </head>
 
 <body>
 
-<canvas id="bgAnimation"></canvas>
-
-<div class="cursor" id="cursor"></div>
+<div id="three-bg"></div>
 
 <nav>
 <h3>DG</h3>
@@ -258,14 +133,12 @@ background:white;color:black
 <li><a href="#skills">Skills</a></li>
 <li><a href="#projects">Projects</a></li>
 <li><a href="#gallery">Gallery</a></li>
-<li><a href="#github">GitHub</a></li>
 <li><a href="#contact">Contact</a></li>
 </ul>
-<div class="toggle" onclick="toggleMode()">Mode</div>
 </nav>
 
 <section class="hero">
-<img src="images/profile.jpg" class="profile-photo">
+<img src="Dh.png" class="profile-photo">
 <h1>Dharmesh Gurram</h1>
 <div class="typing" id="typing"></div>
 <button onclick="document.getElementById('projects').scrollIntoView()">View My Work</button>
@@ -317,11 +190,6 @@ background:white;color:black
 </div>
 </section>
 
-<section id="github" class="reveal github">
-<h2 class="section-title">GitHub Activity</h2>
-<img src="https://ghchart.rshah.org/YOURUSERNAME" alt="GitHub chart">
-</section>
-
 <section class="reveal">
 <h2 class="section-title">Experience</h2>
 <div class="timeline">
@@ -343,36 +211,80 @@ background:white;color:black
 
 <script>
 
-/* CURSOR GLOW */
+/* THREE JS 3D PARTICLE NETWORK */
 
-const cursor=document.getElementById('cursor')
+const scene = new THREE.Scene()
+const camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000)
 
-window.addEventListener('mousemove',e=>{
-cursor.style.left=e.clientX+'px'
-cursor.style.top=e.clientY+'px'
+const renderer = new THREE.WebGLRenderer({alpha:true})
+renderer.setSize(window.innerWidth,window.innerHeight)
+
+document.getElementById("three-bg").appendChild(renderer.domElement)
+
+camera.position.z = 60
+
+const particleCount = 300
+const geometry = new THREE.BufferGeometry()
+
+const positions = new Float32Array(particleCount * 3)
+
+for(let i=0;i<particleCount;i++){
+positions[i*3] = (Math.random()-0.5)*200
+positions[i*3+1] = (Math.random()-0.5)*200
+positions[i*3+2] = (Math.random()-0.5)*200
+}
+
+geometry.setAttribute('position',new THREE.BufferAttribute(positions,3))
+
+const material = new THREE.PointsMaterial({color:0x8b5cf6,size:1.5})
+
+const particles = new THREE.Points(geometry,material)
+
+scene.add(particles)
+
+let mouse = {x:0,y:0}
+
+window.addEventListener("mousemove",e=>{
+mouse.x = (e.clientX/window.innerWidth -0.5)*2
+mouse.y = (e.clientY/window.innerHeight -0.5)*2
 })
 
-/* TYPING */
+function animate(){
+requestAnimationFrame(animate)
+
+particles.rotation.y += 0.0008
+particles.rotation.x += 0.0005
+
+camera.position.x += (mouse.x*10 - camera.position.x)*0.02
+camera.position.y += (-mouse.y*10 - camera.position.y)*0.02
+
+camera.lookAt(scene.position)
+
+renderer.render(scene,camera)
+}
+
+animate()
+
+/* TYPING EFFECT */
 
 const words=["Mechanical Engineer","Technical Expert","Engineering Problem Solver","AI Enthusiast"]
 let i=0
 let j=0
-let current=""
 let deleting=false
 
 function type(){
-current=words[i]
+let word=words[i]
 
 if(!deleting){
 j++
-if(j==current.length){deleting=true;setTimeout(type,1200);return}
-}
-else{
+if(j==word.length){deleting=true;setTimeout(type,1200);return}
+}else{
 j--
 if(j==0){deleting=false;i=(i+1)%words.length}
 }
 
-document.getElementById("typing").textContent=current.substring(0,j)
+
+document.getElementById("typing").textContent=word.substring(0,j)
 
 setTimeout(type,deleting?40:80)
 }
@@ -382,10 +294,7 @@ type()
 /* SKILL BARS */
 
 const bars=document.querySelectorAll('.progress span')
-
-bars.forEach(bar=>{
-setTimeout(()=>{bar.style.width=bar.dataset.width},500)
-})
+bars.forEach(bar=>{setTimeout(()=>{bar.style.width=bar.dataset.width},500)})
 
 /* SCROLL REVEAL */
 
@@ -404,18 +313,14 @@ window.addEventListener('scroll',reveal)
 
 /* GITHUB PROJECTS */
 
-fetch("https://api.github.com/users/YOURUSERNAME/repos")
+fetch("https://api.github.com/users/dgurram207-dotcom/repos")
 .then(res=>res.json())
 .then(data=>{
-
 const container=document.getElementById('repoContainer')
-
 const repos=data.slice(0,6)
 
 repos.forEach(repo=>{
-
 const div=document.createElement('div')
-
 div.className='project'
 
 div.innerHTML=`
@@ -423,22 +328,11 @@ div.innerHTML=`
 <h3>${repo.name}</h3>
 <p>${repo.description||"Project repository"}</p>
 <a href="${repo.html_url}" target="_blank">View on GitHub</a>
-</div>
-`
+</div>`
 
 container.appendChild(div)
-
 })
-
 })
-
-/* DARK LIGHT MODE */
-
-function toggleMode(){
-
-document.body.classList.toggle('light')
-
-}
 
 </script>
 
