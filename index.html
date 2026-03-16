@@ -9,6 +9,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 
 <style>
+
 *{margin:0;padding:0;box-sizing:border-box}
 
 html{scroll-behavior:smooth}
@@ -17,15 +18,44 @@ body{
 font-family:'Inter',sans-serif;
 color:white;
 overflow-x:hidden;
-
-/* PROFESSIONAL TECH BACKGROUND */
-background: radial-gradient(circle at 20% 30%, #1e293b 0%, transparent 40%),
-            radial-gradient(circle at 80% 70%, #312e81 0%, transparent 40%),
-            linear-gradient(180deg,#020617 0%,#050816 60%,#020617 100%);
-
+background:#030617;
 }
 
-/* subtle grid overlay like modern tech sites */
+/* APPLE STYLE GRADIENT MESH */
+.mesh{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 30%,rgba(99,102,241,0.25),transparent 40%),
+radial-gradient(circle at 80% 70%,rgba(168,85,247,0.25),transparent 40%),
+radial-gradient(circle at 50% 50%,rgba(34,197,94,0.15),transparent 40%);
+filter:blur(80px);
+z-index:-3;
+}
+
+/* AURORA ANIMATION */
+.aurora{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:linear-gradient(120deg,#22c55e33,#6366f133,#a855f733);
+background-size:200% 200%;
+animation:auroraMove 12s ease infinite;
+z-index:-2;
+}
+
+@keyframes auroraMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* GRID */
 body::after{
 content:"";
 position:fixed;
@@ -33,13 +63,11 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-pointer-events:none;
-background-image:linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-                 linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-background-size:60px 60px;
-z-index:-2;
+background-image:linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+background-size:70px 70px;
+z-index:-1;
 }
-
 
 #three-bg{
 position:fixed;
@@ -47,7 +75,7 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-z-index:-1
+z-index:-1;
 }
 
 nav{
@@ -59,7 +87,7 @@ justify-content:space-between;
 align-items:center;
 padding:18px 10%;
 background:rgba(255,255,255,0.05);
-backdrop-filter:blur(14px);
+backdrop-filter:blur(12px);
 border-bottom:1px solid rgba(255,255,255,0.08);
 z-index:1000
 }
@@ -140,11 +168,14 @@ footer{text-align:center;padding:40px;opacity:.6}
 .hero h1{font-size:38px}
 .about{grid-template-columns:1fr}
 }
+
 </style>
 </head>
 
 <body>
 
+<div class="mesh"></div>
+<div class="aurora"></div>
 <div id="three-bg"></div>
 
 <nav>
@@ -159,7 +190,7 @@ footer{text-align:center;padding:40px;opacity:.6}
 </nav>
 
 <section class="hero">
-<img src="Dh.png" class="profile-photo">
+<img src="images/profile.jpg" class="profile-photo">
 <h1>Dharmesh Gurram</h1>
 <div class="typing" id="typing"></div>
 <button onclick="document.getElementById('projects').scrollIntoView()">View My Work</button>
@@ -176,23 +207,10 @@ footer{text-align:center;padding:40px;opacity:.6}
 <section id="skills" class="reveal">
 <h2 class="section-title">Skills</h2>
 <div class="skills">
-
-<div class="glass">Thermodynamics
-<div class="progress"><span data-width="90%"></span></div>
-</div>
-
-<div class="glass">Fluid Mechanics
-<div class="progress"><span data-width="85%"></span></div>
-</div>
-
-<div class="glass">Engineering Mechanics
-<div class="progress"><span data-width="95%"></span></div>
-</div>
-
-<div class="glass">Python
-<div class="progress"><span data-width="70%"></span></div>
-</div>
-
+<div class="glass">Thermodynamics<div class="progress"><span data-width="90%"></span></div></div>
+<div class="glass">Fluid Mechanics<div class="progress"><span data-width="85%"></span></div></div>
+<div class="glass">Engineering Mechanics<div class="progress"><span data-width="95%"></span></div></div>
+<div class="glass">Python<div class="progress"><span data-width="70%"></span></div></div>
 </div>
 </section>
 
@@ -232,52 +250,50 @@ footer{text-align:center;padding:40px;opacity:.6}
 
 <script>
 
-/* THREE JS 3D PARTICLE NETWORK */
+/* THREE JS 3D FLOATING SPHERES + NEURAL CONNECTIONS */
 
-const scene = new THREE.Scene()
-const camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000)
+const scene=new THREE.Scene()
+const camera=new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000)
 
-const renderer = new THREE.WebGLRenderer({alpha:true})
+const renderer=new THREE.WebGLRenderer({alpha:true})
 renderer.setSize(window.innerWidth,window.innerHeight)
 
 document.getElementById("three-bg").appendChild(renderer.domElement)
 
-camera.position.z = 60
+camera.position.z=80
 
-const particleCount = 300
-const geometry = new THREE.BufferGeometry()
+const particles=200
 
-const positions = new Float32Array(particleCount * 3)
+const geometry=new THREE.BufferGeometry()
+const positions=new Float32Array(particles*3)
 
-for(let i=0;i<particleCount;i++){
-positions[i*3] = (Math.random()-0.5)*200
-positions[i*3+1] = (Math.random()-0.5)*200
-positions[i*3+2] = (Math.random()-0.5)*200
+for(let i=0;i<particles;i++){
+positions[i*3]=(Math.random()-0.5)*200
+positions[i*3+1]=(Math.random()-0.5)*200
+positions[i*3+2]=(Math.random()-0.5)*200
 }
 
 geometry.setAttribute('position',new THREE.BufferAttribute(positions,3))
 
-const material = new THREE.PointsMaterial({color:0x8b5cf6,size:1.5})
+const material=new THREE.PointsMaterial({color:0x8b5cf6,size:2})
+const cloud=new THREE.Points(geometry,material)
+scene.add(cloud)
 
-const particles = new THREE.Points(geometry,material)
-
-scene.add(particles)
-
-let mouse = {x:0,y:0}
+let mouse={x:0,y:0}
 
 window.addEventListener("mousemove",e=>{
-mouse.x = (e.clientX/window.innerWidth -0.5)*2
-mouse.y = (e.clientY/window.innerHeight -0.5)*2
+mouse.x=(e.clientX/window.innerWidth-0.5)*2
+mouse.y=(e.clientY/window.innerHeight-0.5)*2
 })
 
 function animate(){
 requestAnimationFrame(animate)
 
-particles.rotation.y += 0.0008
-particles.rotation.x += 0.0005
+cloud.rotation.y+=0.0009
+cloud.rotation.x+=0.0004
 
-camera.position.x += (mouse.x*10 - camera.position.x)*0.02
-camera.position.y += (-mouse.y*10 - camera.position.y)*0.02
+camera.position.x+=(mouse.x*20-camera.position.x)*0.02
+camera.position.y+=(-mouse.y*20-camera.position.y)*0.02
 
 camera.lookAt(scene.position)
 
@@ -286,7 +302,7 @@ renderer.render(scene,camera)
 
 animate()
 
-/* TYPING EFFECT */
+/* TYPING */
 
 const words=["Mechanical Engineer","Technical Expert","Engineering Problem Solver","AI Enthusiast"]
 let i=0
@@ -295,18 +311,10 @@ let deleting=false
 
 function type(){
 let word=words[i]
-
-if(!deleting){
-j++
-if(j==word.length){deleting=true;setTimeout(type,1200);return}
-}else{
-j--
-if(j==0){deleting=false;i=(i+1)%words.length}
-}
-
+if(!deleting){j++;if(j==word.length){deleting=true;setTimeout(type,1200);return}}
+else{j--;if(j==0){deleting=false;i=(i+1)%words.length}}
 
 document.getElementById("typing").textContent=word.substring(0,j)
-
 setTimeout(type,deleting?40:80)
 }
 
@@ -321,39 +329,32 @@ bars.forEach(bar=>{setTimeout(()=>{bar.style.width=bar.dataset.width},500)})
 
 function reveal(){
 const reveals=document.querySelectorAll('.reveal')
-
 reveals.forEach(r=>{
 const top=r.getBoundingClientRect().top
-const height=window.innerHeight
-
-if(top<height-100){r.classList.add('active')}
-})
-}
+if(top<window.innerHeight-100){r.classList.add('active')}
+})}
 
 window.addEventListener('scroll',reveal)
 
 /* GITHUB PROJECTS */
 
-fetch("https://api.github.com/users/YOURUSERNAME/repos")
+fetch("https://api.github.com/users/dgurram207-dotcom/repos")
 .then(res=>res.json())
 .then(data=>{
 const container=document.getElementById('repoContainer')
 const repos=data.slice(0,6)
-
 repos.forEach(repo=>{
 const div=document.createElement('div')
 div.className='project'
 
-div.innerHTML=`
-<div class="project-inner glass">
+div.innerHTML=`<div class="project-inner glass">
 <h3>${repo.name}</h3>
 <p>${repo.description||"Project repository"}</p>
 <a href="${repo.html_url}" target="_blank">View on GitHub</a>
 </div>`
 
 container.appendChild(div)
-})
-})
+})})
 
 </script>
 
