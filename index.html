@@ -16,7 +16,7 @@ html{scroll-behavior:smooth}
 /* NEW PROFESSIONAL BACKGROUND COLOR */
 body{
 font-family:'Inter',sans-serif;
-color:#ffffff;f
+color:#ffffff;
 overflow-x:hidden;
 
 /* SUBTLE RADIAL LIGHTING BACKGROUND */
@@ -198,7 +198,7 @@ footer{text-align:center;padding:40px;opacity:.6}
 </nav>
 
 <section class="hero">
-<img src="images/profile.jpg" class="profile-photo">
+<img src="DH.PNG" class="profile-photo">
 <h1>Dharmesh Gurram</h1>
 <div class="typing" id="typing"></div>
 <button onclick="document.getElementById('projects').scrollIntoView()">View My Work</button>
@@ -306,7 +306,8 @@ requestAnimationFrame(animate)
 cloud.rotation.y+=0.0007
 cloud.rotation.x+=0.0003
 
-(mouse.x*15-camera.position.x)*0.02
+/* MOUSE DEPTH MOVEMENT */
+camera.position.x+=(mouse.x*15-camera.position.x)*0.02
 camera.position.y+=(-mouse.y*15-camera.position.y)*0.02
 
 camera.lookAt(scene.position)
