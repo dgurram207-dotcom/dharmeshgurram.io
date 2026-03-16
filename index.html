@@ -14,14 +14,35 @@ html{scroll-behavior:smooth}
 
 body{
 font-family:'Inter',sans-serif;
-background:#070b16;
 color:white;
-overflow-x:hidden
+overflow-x:hidden;
+background:linear-gradient(-45deg,#0f172a,#020617,#111827,#1e1b4b);
+background-size:400% 400%;
+animation:gradientMove 18s ease infinite;
 }
 
-canvas{position:fixed;top:0;left:0;z-index:-1}
+@keyframes gradientMove{
+0%{background-position:0% 50%}
+50%{background-position:100% 50%}
+100%{background-position:0% 50%}
+}
+
+/* CURSOR GLOW */
+
+.cursor{
+width:20px;
+height:20px;
+border-radius:50%;
+position:fixed;
+background:radial-gradient(circle,#8b5cf6,#6366f1,transparent);
+pointer-events:none;
+transform:translate(-50%,-50%);
+filter:blur(6px);
+z-index:9999;
+}
 
 /* NAV */
+
 nav{
 position:fixed;
 top:0;
@@ -29,19 +50,28 @@ width:100%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px 10%;
+padding:18px 10%;
 background:rgba(255,255,255,0.05);
 backdrop-filter:blur(14px);
 border-bottom:1px solid rgba(255,255,255,0.08);
 z-index:1000
 }
 
-nav ul{display:flex;gap:30px;list-style:none}
+nav ul{display:flex;gap:28px;list-style:none}
 
-nav a{text-decoration:none;color:white;font-size:14px;opacity:.8}
+nav a{color:white;text-decoration:none;font-size:14px;opacity:.8}
 nav a:hover{opacity:1}
 
+.toggle{
+cursor:pointer;
+padding:6px 14px;
+border-radius:20px;
+background:rgba(255,255,255,0.1);
+font-size:12px
+}
+
 /* HERO */
+
 .hero{
 height:100vh;
 display:flex;
@@ -59,94 +89,102 @@ box-shadow:0 20px 60px rgba(0,0,0,.8)
 
 .hero h1{font-size:60px;margin-bottom:10px}
 
-.typing{
-font-size:22px;
-opacity:.9;
-height:28px
-}
+.typing{font-size:22px;height:28px}
 
 .hero button{
 margin-top:35px;
-padding:14px 34px;
+padding:14px 36px;
 border:none;
 border-radius:30px;
-background:linear-gradient(90deg,#6366f1,#8b5cf6,#22c55e);
-background-size:200% 200%;
+background:linear-gradient(90deg,#6366f1,#22c55e,#8b5cf6);
+background-size:200%;
 color:white;
-cursor:pointer;
-transition:.3s
-}
-
-.hero button:hover{
-transform:translateY(-4px);
-box-shadow:0 15px 40px rgba(99,102,241,.7)
+cursor:pointer
 }
 
 section{padding:120px 10%;max-width:1300px;margin:auto}
 
 .section-title{text-align:center;font-size:34px;margin-bottom:70px}
 
-/* GLASS CARDS */
+/* GLASS */
+
 .glass{
-background:rgba(255,255,255,0.05);
+background:rgba(255,255,255,0.06);
 backdrop-filter:blur(14px);
-border:1px solid rgba(255,255,255,0.08);
+border:1px solid rgba(255,255,255,0.1);
 border-radius:16px;
-padding:30px;
+padding:28px;
 transition:.4s
 }
 
-.glass:hover{
-transform:translateY(-8px);
-box-shadow:0 25px 60px rgba(0,0,0,.6)
-}
-
 /* ABOUT */
-.about{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-line-height:1.7
-}
+
+.about{display:grid;grid-template-columns:1fr 1fr;gap:60px}
 
 /* SKILLS */
+
 .skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:30px}
 
-.progress{margin-top:12px;height:8px;background:#1f2937;border-radius:20px;overflow:hidden}
+.progress{margin-top:10px;height:8px;background:#1f2937;border-radius:20px;overflow:hidden}
 
 .progress span{display:block;height:100%;background:linear-gradient(90deg,#6366f1,#22c55e);width:0}
 
 /* PROJECTS */
+
 .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px}
 
-.project img{width:100%;border-radius:10px;margin-bottom:15px}
+.project{
+perspective:1000px
+}
+
+.project-inner{
+position:relative;
+transition:transform .4s;
+transform-style:preserve-3d
+}
+
+.project:hover .project-inner{
+transform:rotateY(8deg) rotateX(6deg) scale(1.03)
+}
 
 /* GALLERY */
+
 .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
 .gallery img{width:100%;border-radius:12px;transition:.4s}
 .gallery img:hover{transform:scale(1.05)}
 
 /* TIMELINE */
+
 .timeline{border-left:2px solid #6366f1;padding-left:30px}
 .timeline-item{margin-bottom:30px}
 .timeline-item span{font-size:13px;opacity:.7}
 
+/* GITHUB GRAPH */
+
+.github{
+text-align:center
+}
+
+.github img{
+width:100%;
+max-width:900px;
+margin-top:30px
+}
+
 /* CONTACT */
+
 .contact{text-align:center}
 .contact button{padding:14px 36px;border:none;border-radius:30px;background:#22c55e;color:white;margin-top:20px}
 
 footer{text-align:center;padding:40px;opacity:.6}
 
 /* REVEAL */
-.reveal{
-opacity:0;
-transform:translateY(40px);
-transition:all .8s ease
-}
 
-.reveal.active{
-opacity:1;
-transform:translateY(0)
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s}
+.reveal.active{opacity:1;transform:translateY(0)}
+
+.light{
+background:white;color:black
 }
 
 @media(max-width:900px){
@@ -159,7 +197,7 @@ transform:translateY(0)
 
 <body>
 
-<canvas id="bg"></canvas>
+<div class="cursor" id="cursor"></div>
 
 <nav>
 <h3>DG</h3>
@@ -168,8 +206,10 @@ transform:translateY(0)
 <li><a href="#skills">Skills</a></li>
 <li><a href="#projects">Projects</a></li>
 <li><a href="#gallery">Gallery</a></li>
+<li><a href="#github">GitHub</a></li>
 <li><a href="#contact">Contact</a></li>
 </ul>
+<div class="toggle" onclick="toggleMode()">Mode</div>
 </nav>
 
 <section class="hero">
@@ -182,12 +222,8 @@ transform:translateY(0)
 <section id="about" class="reveal">
 <h2 class="section-title">About</h2>
 <div class="about">
-<div class="glass">
-Mechanical engineer with 4+ years experience solving engineering problems and delivering academic solutions. Worked as Subject Matter Expert at Chegg, Bartleby and Straive.
-</div>
-<div class="glass">
-Specialized in thermodynamics, mechanics and engineering problem solving. Passionate about building technology and tools that help engineers learn faster.
-</div>
+<div class="glass">Mechanical engineer with 4+ years experience solving engineering problems and delivering academic solutions. Worked as Subject Matter Expert at Chegg, Bartleby and Straive.</div>
+<div class="glass">Specialized in thermodynamics, mechanics and engineering problem solving. Passionate about building technology and tools that help engineers learn faster.</div>
 </div>
 </section>
 
@@ -229,6 +265,11 @@ Specialized in thermodynamics, mechanics and engineering problem solving. Passio
 </div>
 </section>
 
+<section id="github" class="reveal github">
+<h2 class="section-title">GitHub Activity</h2>
+<img src="https://ghchart.rshah.org/YOURUSERNAME" alt="GitHub chart">
+</section>
+
 <section class="reveal">
 <h2 class="section-title">Experience</h2>
 <div class="timeline">
@@ -250,63 +291,45 @@ Specialized in thermodynamics, mechanics and engineering problem solving. Passio
 
 <script>
 
-/* PARTICLE BACKGROUND */
+/* CURSOR GLOW */
 
-const canvas=document.getElementById("bg")
-const ctx=canvas.getContext("2d")
-canvas.width=window.innerWidth
-canvas.height=window.innerHeight
+const cursor=document.getElementById('cursor')
 
-let particles=[]
-
-for(let i=0;i<80;i++){
-particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2,dx:(Math.random()-.5)*.5,dy:(Math.random()-.5)*.5})
-}
-
-function animate(){
-ctx.clearRect(0,0,canvas.width,canvas.height)
-particles.forEach(p=>{
-p.x+=p.dx
-p.y+=p.dy
-ctx.beginPath()
-ctx.arc(p.x,p.y,p.r,0,Math.PI*2)
-ctx.fillStyle="white"
-ctx.fill()
+window.addEventListener('mousemove',e=>{
+cursor.style.left=e.clientX+'px'
+cursor.style.top=e.clientY+'px'
 })
-requestAnimationFrame(animate)
-}
 
-animate()
-
-/* TYPING ANIMATION */
+/* TYPING */
 
 const words=["Mechanical Engineer","Technical Expert","Engineering Problem Solver","AI Enthusiast"]
 let i=0
 let j=0
 let current=""
-let isDeleting=false
+let deleting=false
 
 function type(){
 current=words[i]
 
-if(!isDeleting){
+if(!deleting){
 j++
-if(j==current.length){isDeleting=true;setTimeout(type,1200);return}
+if(j==current.length){deleting=true;setTimeout(type,1200);return}
 }
 else{
 j--
-if(j==0){isDeleting=false;i=(i+1)%words.length}
+if(j==0){deleting=false;i=(i+1)%words.length}
 }
 
 document.getElementById("typing").textContent=current.substring(0,j)
-setTimeout(type,isDeleting?40:80)
+
+setTimeout(type,deleting?40:80)
 }
 
 type()
 
 /* SKILL BARS */
 
-const bars=document.querySelectorAll(".progress span")
+const bars=document.querySelectorAll('.progress span')
 
 bars.forEach(bar=>{
 setTimeout(()=>{bar.style.width=bar.dataset.width},500)
@@ -315,17 +338,17 @@ setTimeout(()=>{bar.style.width=bar.dataset.width},500)
 /* SCROLL REVEAL */
 
 function reveal(){
-const reveals=document.querySelectorAll(".reveal")
+const reveals=document.querySelectorAll('.reveal')
 
 reveals.forEach(r=>{
 const top=r.getBoundingClientRect().top
 const height=window.innerHeight
 
-if(top<height-100){r.classList.add("active")}
+if(top<height-100){r.classList.add('active')}
 })
 }
 
-window.addEventListener("scroll",reveal)
+window.addEventListener('scroll',reveal)
 
 /* GITHUB PROJECTS */
 
@@ -333,20 +356,22 @@ fetch("https://api.github.com/users/YOURUSERNAME/repos")
 .then(res=>res.json())
 .then(data=>{
 
-const container=document.getElementById("repoContainer")
+const container=document.getElementById('repoContainer')
 
 const repos=data.slice(0,6)
 
 repos.forEach(repo=>{
 
-const div=document.createElement("div")
+const div=document.createElement('div')
 
-div.className="glass"
+div.className='project'
 
 div.innerHTML=`
+<div class="project-inner glass">
 <h3>${repo.name}</h3>
 <p>${repo.description||"Project repository"}</p>
 <a href="${repo.html_url}" target="_blank">View on GitHub</a>
+</div>
 `
 
 container.appendChild(div)
@@ -354,6 +379,14 @@ container.appendChild(div)
 })
 
 })
+
+/* DARK LIGHT MODE */
+
+function toggleMode(){
+
+document.body.classList.toggle('light')
+
+}
 
 </script>
 
